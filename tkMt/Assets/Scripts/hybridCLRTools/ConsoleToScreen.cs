@@ -1,0 +1,70 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+/// <summary>
+/// 屏幕日志台：方便打印日志到屏幕上，方便定位错误
+/// </summary>
+public class ConsoleToScreen : MonoBehaviour
+{
+    const int maxLines = 50;
+    const int maxLineLength = 120;
+    string _logStr = "";
+
+    readonly List<string> _lines = new();
+
+    [SerializeField] public int fontSize = 15;
+
+    #region 生命周期
+    private void OnEnable()
+    {
+        Application.logMessageReceived += Log;
+    }
+
+    private void OnDisable()
+    {
+        Application.logMessageReceived -= Log;
+    }
+
+    void OnGUI()
+    {
+        GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity,
+          new Vector3(Screen.width / 1200.0f, Screen.height / 800.0f, 1.0f));
+        GUI.Label(new Rect(10, 10, 800, 370), _logStr, new GUIStyle() { fontSize = Math.Max(10, fontSize) });
+    }
+
+    #endregion
+
+
+    public void Log(string logStr, string stackTrace, LogType type)
+    {
+        foreach (var line in logStr.Split('\n'))
+        {
+            if (line.Length <= maxLineLength)
+            {
+                _lines.Add(line);
+                continue;
+            }
+            var lineCount = line.Length / maxLineLength + 1;
+            for (int i = 0; i < lineCount; i++)
+            {
+                if ((i + 1) * maxLineLength <= line.Length)
+                {
+                    _lines.Add(line.Substring(i * maxLineLength, maxLineLength));
+                }
+                else
+                {
+                    _lines.Add(line.Substring(i * maxLineLength, line.Length - i * maxLineLength));
+                }
+            }
+        }
+        if (_lines.Count > maxLines)
+        {
+            _lines.RemoveRange(0, _lines.Count - maxLines);
+        }
+        _logStr = string.Join("\n", _lines);
+    }
+
+    
+}

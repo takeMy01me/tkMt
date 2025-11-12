@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace KTS
 {
     /// <summary>
-    /// ¼Ì³Ğ×ÔMonoµÄµ¥Àı
+    /// ç»§æ‰¿è‡ªMonoçš„å•ä¾‹
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour

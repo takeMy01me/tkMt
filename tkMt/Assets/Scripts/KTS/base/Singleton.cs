@@ -1,11 +1,11 @@
-
+ï»¿
 
 
 
 namespace KTS
 {
     /// <summary>
-    /// µ¥ÀıÄ£Ê½
+    /// å•ä¾‹æ¨¡å¼
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class Singleton<T> where T : class, new()
@@ -30,7 +30,7 @@ namespace KTS
         }
 
         /// <summary>
-        /// ÖØÖÃµ¥ÀıÊµÀı£¨ÓÃÓÚµ¥Ôª²âÊÔ»òÈÈ¸ü³¡¾°ÇĞ»»£©
+        /// é‡ç½®å•ä¾‹å®ä¾‹ï¼ˆç”¨äºå•å…ƒæµ‹è¯•æˆ–çƒ­æ›´åœºæ™¯åˆ‡æ¢ï¼‰
         /// </summary>
         public static void Reset()
         {
@@ -42,9 +42,9 @@ namespace KTS
 
 
 /* 
- * ÎÊÌâ£º
- * 1. Ê¹ÓÃSystem.Activator.CreateInstance(typeof(T), true) Í¨¹ı·´ÉäµÄ·½Ê½´´½¨µ¥Àı£¬ºÍÖ±½ÓnewÓĞÊ²Ã´Çø±ğ£¿
- * 2. lockËø£¬ÔÚµÚÒ»´ÎifÖ®Ç°ÊÇ²»ÊÇ¾ÍÓ¦¸Ã¼ÓÁË£¬»òÕßÓ¦¸ÃÔÚlockÀï£¬newÖ®Ç°ÔÙÅĞ¶ÏÒ»´ÎÊÇ·ñÎª¿Õ
- * 3. ÀÁººÄ£Ê½ Ê¹ÓÃSystem.Lazy
- * 4. ×Ô¶¯×¢²á https://zhuanlan.zhihu.com/p/40751037
+ * é—®é¢˜ï¼š
+ * 1. ä½¿ç”¨System.Activator.CreateInstance(typeof(T), true) é€šè¿‡åå°„çš„æ–¹å¼åˆ›å»ºå•ä¾‹ï¼Œå’Œç›´æ¥newæœ‰ä»€ä¹ˆåŒºåˆ«ï¼Ÿ
+ * 2. locké”ï¼Œåœ¨ç¬¬ä¸€æ¬¡ifä¹‹å‰æ˜¯ä¸æ˜¯å°±åº”è¯¥åŠ äº†ï¼Œæˆ–è€…åº”è¯¥åœ¨locké‡Œï¼Œnewä¹‹å‰å†åˆ¤æ–­ä¸€æ¬¡æ˜¯å¦ä¸ºç©º
+ * 3. æ‡’æ±‰æ¨¡å¼ ä½¿ç”¨System.Lazy
+ * 4. è‡ªåŠ¨æ³¨å†Œ https://zhuanlan.zhihu.com/p/40751037
  */
