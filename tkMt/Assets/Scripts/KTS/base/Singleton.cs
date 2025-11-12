@@ -1,6 +1,6 @@
 
 
-using UnityEngine.Scripting;
+
 
 namespace KTS
 {
@@ -12,9 +12,6 @@ namespace KTS
     {
         private static T _instance;
         private static readonly object _lock = new object();
-
-        [Preserve]
-        protected Singleton() { }
 
         public static T Instance
         {
@@ -49,5 +46,5 @@ namespace KTS
  * 1. 使用System.Activator.CreateInstance(typeof(T), true) 通过反射的方式创建单例，和直接new有什么区别？
  * 2. lock锁，在第一次if之前是不是就应该加了，或者应该在lock里，new之前再判断一次是否为空
  * 3. 懒汉模式 使用System.Lazy
- * 
+ * 4. 自动注册 https://zhuanlan.zhihu.com/p/40751037
  */
