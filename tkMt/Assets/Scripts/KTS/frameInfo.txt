@@ -9,3 +9,36 @@
 
 参考：
 	https://zhuanlan.zhihu.com/p/94851485
+
+
+热更框架：
+	热更新 HybridCLR + 资源管理 YooAsset
+	技术方面：
+		YooAsset的整个生命周期（打包，部署，加载，卸载）都能与HybridCLR无缝配合
+		流程顺畅：YooAsset负责将热更DLL作为资源文件（如hotfix.dll.bytes）打包，上传到CDN，版本比对和下载。
+				 HybridCLR在运行时从YooAsset加载的字节数组中加载DLL，流程非常自然。
+		包体控制：YooAsset的打包策略（如合并依赖，拆分包）非常灵活，有助于减少包体和热更包大小，这对移动端至关重要。
+
+	HybridCLR + YooAsset + AB包关系
+	总体来说，YooAsset是一个以AB包为基础的资源管理框架，它负责管理AB包的打包，部署，下载和加载；而HybridCLR则负责处理代码热更新。
+	协同工作的核心流程
+		热更新流程开始 => YooAsset初始化资源系统 => YooAsset下载远程资源包（含AB包和热更DLL） 
+			=> 1. YooAsset加载AB包中的资源 预制体/纹理/场景等
+			=> 2. YooAsset提供热更DLL字节数据 => HybridCLR加载DLL，补充AOT元数据
+		=> 执行热更逻辑：实例化资源，运行新代码
+
+	AB包的角色
+	YooAsset管理着两种主要资源，它们通常都被打包在AB包中：
+	 1. 代码资源（热更DLL）：你的热更C#代码编译后的DLL文件（如HotUpdate.dll.bytes），会被YooAsset当作一种特殊的原始文件（RawFile）资源打包进AB包。
+	 在运行时，YooAsset负责从远程下载或本地加载这些包含DLL的AB包，并读取DLL的字节码，然后交给HybridCLR去加载和执行。
+	 2. 常规资源（预制体，纹理等）：游戏中的各自资产，如预制体，纹理，动画，配置表等，更是由YooAsset通过AB包进行管理。YooAsset简化了AB包的依赖管理，版本比对，差分下载和加载卸载等复杂流程。
+
+	HybridCLR的角色
+	HybridCLR本身不直接处理AB包。它的核心工作是：
+	1. 加载元数据：为AOT（预先编译）程序集补充元数据，这是支持热更新的基础。
+	2. 解释执行：加载由YooAsset提供的热更DLL字节数据，并解释执行其中的IL指令。这使得在IOS等限制JIT（即时编译）的平台上也能动态运行新的C#代码。
+	3. 高性能运行：利用DHE（差分混合执行）技术，让未更改的代码以AOT方式全速运行，仅解释执行新增或修改的部分，从而获得接近原生的性能。 ？？？
+
+	总结：
+		YooAsset是“资源的搬运工和管理者”，它负责把所有资源（包括代码DLL和游戏资产）打包成AB包，并安全高效地送到运行时环境。  => 解决了AB包管理和资源热更新的繁琐问题。
+		HybridCLR是“代码的执行者”，它接收YooAsset送过来的热更DLL，并让它运行起来。										=> 提供了近乎原生的C#代码热更新能力，解放了开发者。
