@@ -3,3 +3,17 @@
 hybridCLR 学习记录
 
 文档地址：https://www.hybridclr.cn/docs/intro
+
+新手教程
+	快速上手
+	 按照教程安装和配置hybridclr => 创建HotUpdate热更新模块（创建程序集） => 创建热更脚本（Hello.cs）
+	  => 加载热更新程序集（没有通过http服务器下载HotUpdate.dll, 而是直接将HotUpdate.dll放到StreamingAssets目录下）
+	  (如何创建程序集： https://docs.unity3d.com/Manual/assembly-definition-files.html)
+	  => 调用热更新代码 （反射 type.GetMethod("").Invoke()）
+
+	  tips：在HybridCLR流程中，你复制 HotUpdate.dll.bytes 到 StreamingAssets 的本质是：将本应JIT编译的代码，通过AOT元数据桥接机制实现"伪动态加载"，这是在遵守平台规则的前提下实现热更新的精妙设计。
+
+	使用泛型
+	  AOT和JIT 
+
+	  .net 泛型的生成原理 https://www.cnblogs.com/ryzen/p/14480171.html

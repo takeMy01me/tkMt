@@ -101,3 +101,5 @@ InitTestScene*.unity*
 /Extra
 /tkMt/Temp
 /tkMt/obj
+/tkMt/HybridCLRData
+/tkMt/Logs

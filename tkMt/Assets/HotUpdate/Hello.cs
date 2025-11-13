@@ -8,5 +8,8 @@ public class Hello : MonoBehaviour
     {
         //Debug.Log("Hello, HybridCLR");
         Debug.Log("Hello, World");
+
+        GameObject go = new GameObject("hotTest_1");
+        go.AddComponent<Print>();
     }
 }
