@@ -1,0 +1,12 @@
+YooAsset
+
+
+AssetBundle Builder 打包界面的设置	
+	Compression：
+		LZ4 LZMA Uncompressed
+
+PlayMode 
+	Editor Simulate Mode  编辑器模拟模式
+	Offline Play Mode     离线模式
+	Host Play Mode		  远程连接模式
+

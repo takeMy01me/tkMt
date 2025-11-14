@@ -104,3 +104,6 @@ InitTestScene*.unity*
 /tkMt/HybridCLRData
 /tkMt/Logs
 /tkMt/Bundles
+/UnityServer
+/tkMt/Assets/StreamingAssets/yoo
+/tkMt/Assets/StreamingAssets/yoo.meta

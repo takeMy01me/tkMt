@@ -1,0 +1,52 @@
+
+
+使用 参考Samples/SpaceShooter/Boot.cs
+
+    IEnumerator Start()
+    {
+        // 游戏管理器
+        GameManager.Instance.Behaviour = this;
+
+        // 初始化事件系统
+        UniEvent.Initalize();
+
+        // 初始化资源系统
+        YooAssets.Initialize();
+
+        // 加载更新页面
+        var go = Resources.Load<GameObject>("PatchWindow");
+        GameObject.Instantiate(go);
+
+        // 开始补丁更新流程
+        var operation = new PatchOperation("DefaultPackage", PlayMode);
+        YooAssets.StartOperation(operation);
+        yield return operation;
+
+        // 设置默认的资源包
+        var gamePackage = YooAssets.GetPackage("DefaultPackage");
+        YooAssets.SetDefaultPackage(gamePackage);
+
+        // 切换到主页面场景
+        SceneEventDefine.ChangeToHomeScene.SendEventMessage();
+    }
+
+YooAsset核心部分
+    1.  初始化资源系统
+        YooAsset.Initialize();
+        初始化 OperationSystem， 并通过动态添加Component，添加mono类，来进行Update（OperationSystem的Update）
+    
+    2.  开始补丁更新流程
+        var operation = new PatchOperation("DefaultPackage", PlayMode);
+        YooAssets.StartOperation(operation);
+        yield return operation;
+
+
+常规部分
+    1.  游戏管理器 
+        GameManager.Instance.Behaviour = this; 
+        GameManager是不继承自Mono的，通过持有Boot的mono，来进行协程操作。
+
+    2.  初始化事件系统
+        UniEvent.Initalize();
+        作者自己实现的一个小的事件系统，通过轮询，遍历_postingList: List<PostWrapper>
+        PostWrapper: 封装的一个传递消息的类 内部类，用于延迟事件的包装
